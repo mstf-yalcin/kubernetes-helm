@@ -1,0 +1,27 @@
+dependencies:
+- name: common
+  repository: file://../../common
+  version: 0.1.0
+- name: config-server
+  repository: file://../../services/config-server
+  version: 0.1.0
+- name: eureka-server
+  repository: file://../../services/eureka-server
+  version: 0.1.0
+- name: accounts
+  repository: file://../../services/accounts
+  version: 0.1.0
+- name: cards
+  repository: file://../../services/cards
+  version: 0.1.0
+- name: loans
+  repository: file://../../services/loans
+  version: 0.1.0
+- name: gateway-server
+  repository: file://../../services/gateway-server
+  version: 0.1.0
+- name: notification-service
+  repository: file://../../services/notification-service
+  version: 0.1.0
+digest: sha256:a31b17263137fd25fc21b4a6cbb05be2d697fe77ae5aeaadcbbf8ff488bfa6aa
+generated: "2024-08-11T11:41:04.5209934+03:00"

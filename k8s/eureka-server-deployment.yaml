@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-server-deployment
+  labels:
+    app: eureka-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-server
+  template:
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+      - name: eureka-server
+        image: eureka-server:v1.0
+        resources:
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8070
+          initialDelaySeconds: 5
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8070
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        ports:
+        - containerPort: 8070
+        env:
+        - name: SPRING_APPLICATION_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: test-configmap
+              key: EUREKA_APPLICATION_NAME
+        - name: SPRING_CONFIG_IMPORT
+          valueFrom: 
+            configMapKeyRef:
+              name: test-configmap
+              key: SPRING_CONFIG_IMPORT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-server
+spec:
+  selector:
+    app: eureka-server
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8070
+      targetPort: 8070
+---
